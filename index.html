@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HeartGuard AI — Heart Disease Prediction System</title>
+    <meta
+      name="description"
+      content="AI-powered heart disease prediction using 13 clinical parameters. Get instant risk assessment, health insights, and personalized recommendations."
+    />
+    <meta
+      name="keywords"
+      content="heart disease prediction, AI health, cardiology, risk assessment"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- jsPDF for report download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
+    <!-- ═══════════════════════════════════════════════════════════ BG ORBS ══ -->
+    <div class="bg-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ NAVBAR ══ -->
+    <nav
+      class="navbar"
+      id="navbar"
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <a class="nav-brand" href="#home" aria-label="HeartGuard AI Home">
+        <span class="heart-icon" aria-hidden="true">❤️</span>
+        HeartGuard <span style="color: var(--accent-light)">AI</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks" role="list">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#predict">Predict</a></li>
+        <li><a href="#charts">Analytics</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#tips">Health Tips</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button
+          class="btn-theme"
+          id="themeToggle"
+          aria-label="Toggle dark/light mode"
+          title="Toggle theme"
+        >
+          🌙
+        </button>
+        <a href="#predict" class="btn-nav-cta">🔍 Predict Now</a>
+        <div
+          class="hamburger"
+          id="hamburger"
+          aria-label="Open menu"
+          role="button"
+          tabindex="0"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════ MAIN ══ -->
+    <main>
+      <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+      <section class="hero" id="home">
+        <div class="container">
+          <div class="hero-content">
+            <div class="hero-text">
+              <div class="hero-badge">🤖 AI-Powered Cardiology</div>
+              <h1 class="hero-title">
+                Predict Heart Disease<br />
+                <span class="gradient-text">Before It Strikes</span>
+              </h1>
+              <p class="hero-desc">
+                Advanced machine learning analyzes 13 clinical parameters to
+                give you an instant, accurate heart disease risk assessment. No
+                registration required.
+              </p>
+              <div class="hero-buttons">
+                <a href="#predict" class="btn-primary">❤️ Start Prediction</a>
+                <a href="#charts" class="btn-secondary">📊 View Analytics</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-item">
+                  <div class="stat-value" data-target="95">0</div>
+                  <div class="stat-label">% Accuracy</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" data-target="13">0</div>
+                  <div class="stat-label">Parameters</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" data-target="300">0</div>
+                  <div class="stat-label">+ Patients Analyzed</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" data-target="7">0</div>
+                  <div class="stat-label">ML Models</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+              <div class="heart-3d">❤️</div>
+              <div class="floating-cards">
+                <div class="float-card">
+                  <span class="dot" style="background: var(--emerald)"></span>
+                  <span>Low Risk · 23%</span>
+                </div>
+                <div class="float-card">
+                  <span class="dot" style="background: var(--red)"></span>
+                  <span>Chol: 240 mg/dL</span>
+                </div>
+                <div class="float-card">
+                  <span class="dot" style="background: var(--accent)"></span>
+                  <span>AI Confidence 97%</span>
+                </div>
+                <div class="float-card">
+                  <span class="dot" style="background: var(--amber)"></span>
+                  <span>BP: 145/90</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── STATS BAR ──────────────────────────────────────────────────────── -->
+      <div class="stats-bar" aria-label="Key statistics">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-box">
+              <span class="num" data-counter="17.9">0</span>
+              <span class="lbl">Million heart deaths/year globally</span>
+            </div>
+            <div class="stat-box">
+              <span class="num" data-counter="80">0</span>
+              <span class="lbl">% of premature deaths are preventable</span>
+            </div>
+            <div class="stat-box">
+              <span class="num" data-counter="95">0</span>
+              <span class="lbl">% Model accuracy (ROC-AUC)</span>
+            </div>
+            <div class="stat-box">
+              <span class="num" data-counter="2">0</span>
+              <span class="lbl">Seconds to get your result</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FEATURES ───────────────────────────────────────────────────────── -->
+      <section
+        class="features-section"
+        id="features"
+        aria-labelledby="feat-title"
+      >
+        <div class="container">
+          <div class="text-center">
+            <div class="section-label">⚡ Capabilities</div>
+            <h2 class="section-title" id="feat-title">Everything You Need</h2>
+            <p class="section-desc" style="margin: 0 auto">
+              Powered by an ensemble of 7 machine learning models trained on
+              clinical heart disease data.
+            </p>
+          </div>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div
+                class="feature-icon"
+                style="background: rgba(99, 102, 241, 0.15)"
+              >
+                🧠
+              </div>
+              <h3>Multi-Model AI</h3>
+              <p>
+                Ensemble of Random Forest, Gradient Boosting, SVM, XGBoost and
+                more — the best model is selected automatically.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div
+                class="feature-icon"
+                style="background: rgba(236, 72, 153, 0.15)"
+              >
+                📊
+              </div>
+              <h3>Real-Time Analytics</h3>
+              <p>
+                Interactive Chart.js visualizations showing feature importance,
+                risk distribution, and model comparison.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div
+                class="feature-icon"
+                style="background: rgba(16, 185, 129, 0.15)"
+              >
+                🛡️
+              </div>
+              <h3>Risk Stratification</h3>
+              <p>
+                Instant Low / Medium / High risk classification with animated
+                probability bar and confidence score.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div
+                class="feature-icon"
+                style="background: rgba(245, 158, 11, 0.15)"
+              >
+                📋
+              </div>
+              <h3>PDF Reports</h3>
+              <p>
+                Download a complete professional health report with your
+                results, contributing factors, and recommendations.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div
+                class="feature-icon"
+                style="background: rgba(59, 130, 246, 0.15)"
+              >
+                💾
+              </div>
+              <h3>Local History</h3>
+              <p>
+                All predictions saved locally in your browser — track changes
+                over time without any account needed.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div
+                class="feature-icon"
+                style="background: rgba(139, 92, 246, 0.15)"
+              >
+                🔒
+              </div>
+              <h3>100% Private</h3>
+              <p>
+                All analysis happens in your browser. No data is ever sent to a
+                server. Your health data stays yours.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── PREDICTION ─────────────────────────────────────────────────────── -->
+      <section
+        class="prediction-section"
+        id="predict"
+        aria-labelledby="pred-title"
+      >
+        <div class="container">
+          <div class="text-center" style="margin-bottom: 3rem">
+            <div class="section-label">🔬 AI Analysis</div>
+            <h2 class="section-title" id="pred-title">
+              Heart Disease Predictor
+            </h2>
+            <p class="section-desc" style="margin: 0 auto">
+              Enter patient clinical data below. All 13 parameters are used by
+              the AI model.
+            </p>
+          </div>
+
+          <div class="prediction-layout">
+            <!-- FORM -->
+            <div class="card gradient-border" id="predForm">
+              <div class="form-title">🩺 Patient Clinical Data</div>
+              <div class="form-subtitle">
+                Fill in the values from the patient's medical report.
+              </div>
+
+              <form id="heartForm" novalidate>
+                <div class="form-grid">
+                  <!-- Age -->
+                  <div class="form-group">
+                    <label class="form-label" for="age">
+                      Age (years)
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Patient age in years (29–77 typical range)"
+                        >?</span
+                      >
+                    </label>
+                    <input
+                      class="form-input"
+                      type="number"
+                      id="age"
+                      min="1"
+                      max="120"
+                      placeholder="e.g. 54"
+                      required
+                    />
+                  </div>
+
+                  <!-- Sex -->
+                  <div class="form-group">
+                    <label class="form-label" for="sex">
+                      Sex
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Biological sex of the patient"
+                        >?</span
+                      >
+                    </label>
+                    <select class="form-select" id="sex" required>
+                      <option value="" disabled selected>Select…</option>
+                      <option value="1">Male</option>
+                      <option value="0">Female</option>
+                    </select>
+                  </div>
+
+                  <!-- CP -->
+                  <div class="form-group">
+                    <label class="form-label" for="cp">
+                      Chest Pain Type
+                      <span
+                        class="tooltip-icon"
+                        data-tip="0=Typical Angina, 1=Atypical Angina, 2=Non-Anginal, 3=Asymptomatic"
+                        >?</span
+                      >
+                    </label>
+                    <select class="form-select" id="cp" required>
+                      <option value="" disabled selected>Select…</option>
+                      <option value="0">Typical Angina</option>
+                      <option value="1">Atypical Angina</option>
+                      <option value="2">Non-Anginal Pain</option>
+                      <option value="3">Asymptomatic</option>
+                    </select>
+                  </div>
+
+                  <!-- Trestbps -->
+                  <div class="form-group">
+                    <label class="form-label" for="trestbps">
+                      Resting BP (mmHg)
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Resting blood pressure in mm Hg on admission to hospital"
+                        >?</span
+                      >
+                    </label>
+                    <input
+                      class="form-input"
+                      type="number"
+                      id="trestbps"
+                      min="80"
+                      max="220"
+                      placeholder="e.g. 130"
+                      required
+                    />
+                  </div>
+
+                  <!-- Chol -->
+                  <div class="form-group">
+                    <label class="form-label" for="chol">
+                      Cholesterol (mg/dl)
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Serum cholesterol in mg/dl. Normal <200, Borderline 200–239, High ≥240"
+                        >?</span
+                      >
+                    </label>
+                    <input
+                      class="form-input"
+                      type="number"
+                      id="chol"
+                      min="100"
+                      max="600"
+                      placeholder="e.g. 240"
+                      required
+                    />
+                  </div>
+
+                  <!-- FBS -->
+                  <div class="form-group">
+                    <label class="form-label" for="fbs">
+                      Fasting Blood Sugar
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Fasting blood sugar >120 mg/dl. 1=True (diabetic), 0=False"
+                        >?</span
+                      >
+                    </label>
+                    <select class="form-select" id="fbs" required>
+                      <option value="" disabled selected>Select…</option>
+                      <option value="1">> 120 mg/dl (Yes)</option>
+                      <option value="0">≤ 120 mg/dl (No)</option>
+                    </select>
+                  </div>
+
+                  <!-- Restecg -->
+                  <div class="form-group">
+                    <label class="form-label" for="restecg">
+                      Resting ECG
+                      <span
+                        class="tooltip-icon"
+                        data-tip="0=Normal, 1=ST-T wave abnormality, 2=Left ventricular hypertrophy"
+                        >?</span
+                      >
+                    </label>
+                    <select class="form-select" id="restecg" required>
+                      <option value="" disabled selected>Select…</option>
+                      <option value="0">Normal</option>
+                      <option value="1">ST-T Abnormality</option>
+                      <option value="2">LV Hypertrophy</option>
+                    </select>
+                  </div>
+
+                  <!-- Thalach -->
+                  <div class="form-group">
+                    <label class="form-label" for="thalach">
+                      Max Heart Rate
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Maximum heart rate achieved during exercise stress test"
+                        >?</span
+                      >
+                    </label>
+                    <input
+                      class="form-input"
+                      type="number"
+                      id="thalach"
+                      min="60"
+                      max="220"
+                      placeholder="e.g. 150"
+                      required
+                    />
+                  </div>
+
+                  <!-- Exang -->
+                  <div class="form-group">
+                    <label class="form-label" for="exang">
+                      Exercise Angina
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Exercise-induced angina (chest pain during exercise)"
+                        >?</span
+                      >
+                    </label>
+                    <select class="form-select" id="exang" required>
+                      <option value="" disabled selected>Select…</option>
+                      <option value="1">Yes</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+
+                  <!-- Oldpeak -->
+                  <div class="form-group">
+                    <label class="form-label" for="oldpeak">
+                      ST Depression
+                      <span
+                        class="tooltip-icon"
+                        data-tip="ST depression induced by exercise relative to rest (0.0–6.2)"
+                        >?</span
+                      >
+                    </label>
+                    <input
+                      class="form-input"
+                      type="number"
+                      id="oldpeak"
+                      min="0"
+                      max="7"
+                      step="0.1"
+                      placeholder="e.g. 1.5"
+                      required
+                    />
+                  </div>
+
+                  <!-- Slope -->
+                  <div class="form-group">
+                    <label class="form-label" for="slope">
+                      ST Slope
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Slope of peak exercise ST segment: 0=Upsloping, 1=Flat, 2=Downsloping"
+                        >?</span
+                      >
+                    </label>
+                    <select class="form-select" id="slope" required>
+                      <option value="" disabled selected>Select…</option>
+                      <option value="0">Upsloping</option>
+                      <option value="1">Flat</option>
+                      <option value="2">Downsloping</option>
+                    </select>
+                  </div>
+
+                  <!-- CA -->
+                  <div class="form-group">
+                    <label class="form-label" for="ca">
+                      Major Vessels (0–3)
+                      <span
+                        class="tooltip-icon"
+                        data-tip="Number of major vessels colored by fluoroscopy (0–3)"
+                        >?</span
+                      >
+                    </label>
+                    <select class="form-select" id="ca" required>
+                      <option value="" disabled selected>Select…</option>
+                      <option value="0">0 vessels</option>
+                      <option value="1">1 vessel</option>
+                      <option value="2">2 vessels</option>
+                      <option value="3">3 vessels</option>
+                    </select>
+                  </div>
+
+                  <!-- Thal (full width) -->
+                  <div class="form-group full">
+                    <label class="form-label" for="thal">
+                      Thalassemia Type
+                      <span
+                        class="tooltip-icon"
+                        data-tip="3=Normal blood flow, 6=Fixed defect (abnormal at rest), 7=Reversible defect"
+                        >?</span
+                      >
+                    </label>
+                    <select class="form-select" id="thal" required>
+                      <option value="" disabled selected>Select…</option>
+                      <option value="3">3 — Normal</option>
+                      <option value="6">6 — Fixed Defect</option>
+                      <option value="7">7 — Reversible Defect</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- /form-grid -->
+
+                <div class="form-actions">
+                  <button type="submit" class="btn-predict" id="predictBtn">
+                    <span class="btn-icon">🔬</span>
+                    <span class="btn-label">Analyze Risk</span>
+                  </button>
+                  <button type="button" class="btn-reset" id="resetBtn">
+                    ↺ Reset
+                  </button>
+                </div>
+
+                <!-- Quick fill buttons -->
+                <div
+                  style="
+                    margin-top: 1rem;
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <button
+                    type="button"
+                    class="result-action-btn"
+                    id="fillHighRisk"
+                  >
+                    🔴 High Risk Sample
+                  </button>
+                  <button
+                    type="button"
+                    class="result-action-btn"
+                    id="fillLowRisk"
+                  >
+                    🟢 Low Risk Sample
+                  </button>
+                </div>
+              </form>
+            </div>
+            <!-- /card -->
+
+            <!-- RESULTS PANEL -->
+            <div class="card results-panel" id="resultsPanel">
+              <div class="result-placeholder" id="resultPlaceholder">
+                <div class="big-icon">🫀</div>
+                <p>
+                  Fill in the form and click <strong>Analyze Risk</strong> to
+                  get your AI prediction.
+                </p>
+              </div>
+
+              <div class="result-content" id="resultContent">
+                <div class="result-header">
+                  <div class="result-title">🩺 Prediction Result</div>
+                  <div class="result-actions">
+                    <button class="result-action-btn" id="downloadPDF">
+                      📄 PDF
+                    </button>
+                    <button class="result-action-btn" id="printReport">
+                      🖨️ Print
+                    </button>
+                    <button class="result-action-btn" id="saveHistory">
+                      💾 Save
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Risk Badge -->
+                <div id="riskBadge" class="risk-badge"></div>
+
+                <!-- Prediction Label -->
+                <div
+                  id="predLabel"
+                  style="
+                    font-size: 1.2rem;
+                    font-weight: 800;
+                    font-family: var(--font-display);
+                    margin-bottom: 0.5rem;
+                  "
+                ></div>
+
+                <!-- Probability Bar -->
+                <div class="prob-container">
+                  <div class="prob-label">
+                    <span
+                      style="color: var(--text-secondary); font-size: 0.8rem"
+                      >Disease Probability</span
+                    >
+                    <span id="probPercent" style="font-weight: 700"></span>
+                  </div>
+                  <div class="prob-bar-track">
+                    <div class="prob-bar-fill" id="probBar"></div>
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      margin-top: 0.35rem;
+                      font-size: 0.72rem;
+                      color: var(--text-muted);
+                    "
+                  >
+                    <span>Low Risk</span><span>Medium</span
+                    ><span>High Risk</span>
+                  </div>
+                </div>
+
+                <!-- Metrics -->
+                <div class="metrics-grid">
+                  <div class="metric-box">
+                    <span
+                      class="metric-val"
+                      id="metricProb"
+                      style="color: var(--accent)"
+                      >—</span
+                    >
+                    <span class="metric-lbl">Probability</span>
+                  </div>
+                  <div class="metric-box">
+                    <span
+                      class="metric-val"
+                      id="metricConf"
+                      style="color: var(--pink)"
+                      >—</span
+                    >
+                    <span class="metric-lbl">Confidence</span>
+                  </div>
+                  <div class="metric-box">
+                    <span
+                      class="metric-val"
+                      id="metricRisk"
+                      style="color: var(--amber)"
+                      >—</span
+                    >
+                    <span class="metric-lbl">Risk Level</span>
+                  </div>
+                  <div class="metric-box">
+                    <span
+                      class="metric-val"
+                      id="metricModel"
+                      style="color: var(--emerald); font-size: 0.9rem"
+                      >RF</span
+                    >
+                    <span class="metric-lbl">Model Used</span>
+                  </div>
+                </div>
+
+                <!-- Contributing Factors -->
+                <div class="factors-title">📌 Key Contributing Factors</div>
+                <div id="factorsList"></div>
+
+                <!-- Divider -->
+                <div class="divider"></div>
+
+                <!-- Recommendation -->
+                <div class="recommendation" id="recommendation"></div>
+              </div>
+              <!-- /result-content -->
+            </div>
+            <!-- /results-panel -->
+          </div>
+          <!-- /prediction-layout -->
+        </div>
+      </section>
+
+      <!-- ── CHARTS ─────────────────────────────────────────────────────────── -->
+      <section class="charts-section" id="charts" aria-labelledby="chart-title">
+        <div class="container">
+          <div class="text-center">
+            <div class="section-label">📈 Data Insights</div>
+            <h2 class="section-title" id="chart-title">
+              Interactive Analytics
+            </h2>
+            <p class="section-desc" style="margin: 0 auto">
+              Visual breakdown of feature importance, model accuracy, and risk
+              distribution across the dataset.
+            </p>
+          </div>
+          <div class="charts-grid">
+            <div class="card chart-card">
+              <div class="chart-title">🏆 Feature Importance</div>
+              <canvas
+                id="featureChart"
+                aria-label="Feature importance chart"
+              ></canvas>
+            </div>
+            <div class="card chart-card">
+              <div class="chart-title">🤖 Model Accuracy Comparison</div>
+              <canvas
+                id="modelChart"
+                aria-label="Model accuracy comparison chart"
+              ></canvas>
+            </div>
+            <div class="card chart-card">
+              <div class="chart-title">📊 Risk Distribution</div>
+              <canvas
+                id="riskChart"
+                aria-label="Risk distribution donut chart"
+              ></canvas>
+            </div>
+            <div class="card chart-card">
+              <div class="chart-title">💓 Age vs Risk Profile</div>
+              <canvas
+                id="ageChart"
+                aria-label="Age vs risk scatter chart"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TOOLS ──────────────────────────────────────────────────────────── -->
+      <section class="tools-section" id="tools" aria-labelledby="tools-title">
+        <div class="container">
+          <div class="text-center">
+            <div class="section-label">🛠️ Health Tools</div>
+            <h2 class="section-title" id="tools-title">
+              Quick Health Calculators
+            </h2>
+          </div>
+          <div class="tools-grid">
+            <!-- BMI Calculator -->
+            <div class="card">
+              <div class="form-title">⚖️ BMI Calculator</div>
+              <div class="form-subtitle">
+                Calculate your Body Mass Index instantly.
+              </div>
+              <div class="bmi-form">
+                <div class="form-group">
+                  <label class="form-label" for="bmiWeight">Weight (kg)</label>
+                  <input
+                    class="form-input"
+                    type="number"
+                    id="bmiWeight"
+                    placeholder="e.g. 70"
+                    min="20"
+                    max="300"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="bmiHeight">Height (cm)</label>
+                  <input
+                    class="form-input"
+                    type="number"
+                    id="bmiHeight"
+                    placeholder="e.g. 175"
+                    min="50"
+                    max="250"
+                  />
+                </div>
+              </div>
+              <button
+                class="btn-predict"
+                id="calcBMI"
+                style="margin-top: 1rem; width: 100%"
+              >
+                Calculate BMI
+              </button>
+              <div class="bmi-result" id="bmiResult">
+                <span class="bmi-score" id="bmiScore">—</span>
+                <span class="bmi-category" id="bmiCategory">—</span>
+              </div>
+            </div>
+
+            <!-- Heart Score Meter -->
+            <div class="card" style="text-align: center">
+              <div class="form-title" style="justify-content: center">
+                💗 Heart Health Score
+              </div>
+              <div class="form-subtitle" style="text-align: center">
+                Updated after each prediction.
+              </div>
+              <div class="meter-wrap" style="margin-top: 1.5rem">
+                <svg
+                  class="meter-svg"
+                  viewBox="0 0 200 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient
+                      id="meterGrad"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="0%"
+                    >
+                      <stop offset="0%" stop-color="#ef4444" />
+                      <stop offset="50%" stop-color="#f59e0b" />
+                      <stop offset="100%" stop-color="#10b981" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Track -->
+                  <path
+                    d="M 10 90 A 90 90 0 0 1 190 90"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.08)"
+                    stroke-width="16"
+                    stroke-linecap="round"
+                  />
+                  <!-- Fill -->
+                  <path
+                    id="meterFill"
+                    d="M 10 90 A 90 90 0 0 1 190 90"
+                    fill="none"
+                    stroke="url(#meterGrad)"
+                    stroke-width="16"
+                    stroke-linecap="round"
+                    stroke-dasharray="283"
+                    stroke-dashoffset="283"
+                    style="transition: stroke-dashoffset 1.5s ease"
+                  />
+                  <!-- Needle -->
+                  <line
+                    id="meterNeedle"
+                    x1="100"
+                    y1="90"
+                    x2="100"
+                    y2="20"
+                    stroke="white"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    style="
+                      transform-origin: 100px 90px;
+                      transform: rotate(-90deg);
+                      transition: transform 1.5s ease;
+                    "
+                  />
+                  <circle cx="100" cy="90" r="6" fill="white" />
+                </svg>
+                <div class="meter-value" id="meterValue">—</div>
+              </div>
+              <div class="meter-label" id="meterLabel">
+                Run a prediction to see your score
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── HISTORY ─────────────────────────────────────────────────────────── -->
+      <section
+        class="history-section"
+        id="history"
+        aria-labelledby="hist-title"
+      >
+        <div class="container">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 1rem;
+              margin-bottom: 1rem;
+            "
+          >
+            <div>
+              <div class="section-label">📁 Records</div>
+              <h2 class="section-title" id="hist-title">Patient History</h2>
+            </div>
+            <button
+              class="btn-secondary"
+              id="clearHistory"
+              style="padding: 0.6rem 1.25rem"
+            >
+              🗑️ Clear All
+            </button>
+          </div>
+          <div class="history-grid" id="historyGrid">
+            <div class="no-history" style="grid-column: 1/-1">
+              No predictions saved yet. Run a prediction and click 💾 Save.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── HEALTH TIPS ─────────────────────────────────────────────────────── -->
+      <section class="tips-section" id="tips" aria-labelledby="tips-title">
+        <div class="container">
+          <div class="text-center">
+            <div class="section-label">💡 Wellness</div>
+            <h2 class="section-title" id="tips-title">Heart Health Tips</h2>
+          </div>
+          <div class="tips-grid">
+            <div class="tip-card">
+              <span class="tip-icon">🥗</span>
+              <h4>Eat Heart-Healthy</h4>
+              <p>
+                Favor fruits, vegetables, whole grains. Limit saturated fats,
+                sodium, and added sugars to reduce cholesterol.
+              </p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">🏃</span>
+              <h4>Stay Active</h4>
+              <p>
+                Aim for 150 minutes of moderate aerobic exercise weekly. Even
+                brisk walking can cut heart disease risk by 35%.
+              </p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">🚭</span>
+              <h4>Quit Smoking</h4>
+              <p>
+                Smoking doubles your risk of heart disease. Quitting within 1
+                year cuts the risk to half that of a smoker.
+              </p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">😴</span>
+              <h4>Quality Sleep</h4>
+              <p>
+                7–9 hours of quality sleep per night. Poor sleep is linked to
+                high blood pressure and inflammation.
+              </p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">🧘</span>
+              <h4>Manage Stress</h4>
+              <p>
+                Chronic stress raises cortisol and blood pressure. Try
+                meditation, yoga, or deep breathing daily.
+              </p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">💊</span>
+              <h4>Monitor BP & Cholesterol</h4>
+              <p>
+                Check blood pressure monthly. Target below 120/80 mmHg. High BP
+                is the #1 controllable risk factor.
+              </p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">🍷</span>
+              <h4>Limit Alcohol</h4>
+              <p>
+                Excess alcohol raises triglycerides and blood pressure. Limit to
+                ≤1 drink/day for women, ≤2 for men.
+              </p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">🩺</span>
+              <h4>Regular Checkups</h4>
+              <p>
+                Annual cardiac screenings catch silent issues early. Early
+                detection is the most effective treatment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════ FOOTER ══ -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">❤️ HeartGuard AI</div>
+            <p class="footer-desc">
+              AI-powered heart disease prediction for early detection and
+              prevention. Built with machine learning and modern web technology.
+            </p>
+            <div class="footer-social">
+              <a href="#" class="social-btn" aria-label="GitHub">⭐</a>
+              <a href="#" class="social-btn" aria-label="Twitter">🐦</a>
+              <a href="#" class="social-btn" aria-label="LinkedIn">💼</a>
+              <a href="#" class="social-btn" aria-label="Email">📧</a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Features</h4>
+            <ul>
+              <li><a href="#predict">Prediction</a></li>
+              <li><a href="#charts">Analytics</a></li>
+              <li><a href="#tools">BMI Calculator</a></li>
+              <li><a href="#history">Patient History</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">Cleveland Dataset</a></li>
+              <li><a href="#">UCI ML Repository</a></li>
+              <li><a href="#">AHA Guidelines</a></li>
+              <li><a href="#">WHO Heart Report</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="#" id="showDisclaimer">Medical Disclaimer</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Use</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 HeartGuard AI. Built for educational purposes only.</p>
+          <p style="color: var(--accent-light)">
+            ❤️ Made with care for better heart health
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════ CHATBOT FAB ══ -->
+    <button
+      class="chatbot-fab"
+      id="chatbotFab"
+      aria-label="Open AI Health Assistant"
+    >
+      🤖
+    </button>
+    <div
+      class="chatbot-window"
+      id="chatbotWindow"
+      role="dialog"
+      aria-label="AI Health Assistant"
+    >
+      <div class="chatbot-header">
+        <div class="chatbot-avatar">🤖</div>
+        <div class="chatbot-header-info">
+          <div class="chatbot-name">HeartGuard Assistant</div>
+          <div class="chatbot-status">🟢 Online — AI Health Bot</div>
+        </div>
+        <button
+          class="chatbot-close"
+          id="chatbotClose"
+          aria-label="Close chatbot"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="chatbot-messages" id="chatMessages">
+        <div class="chat-msg bot">
+          👋 Hello! I'm your AI health assistant. Ask me about heart disease,
+          risk factors, or how to use this tool!
+        </div>
+        <div class="chat-msg bot">
+          💡 <strong>Quick tips:</strong> Use the "High Risk Sample" button to
+          see what a dangerous patient profile looks like.
+        </div>
+      </div>
+      <div class="chatbot-input-wrap">
+        <input
+          class="chatbot-input"
+          id="chatInput"
+          type="text"
+          placeholder="Ask about heart health…"
+          aria-label="Chat message input"
+        />
+        <button class="chatbot-send" id="chatSend" aria-label="Send message">
+          ➤
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ LOADING ══ -->
+    <div
+      class="loading-overlay"
+      id="loadingOverlay"
+      role="status"
+      aria-live="polite"
+    >
+      <div class="loading-spinner"></div>
+      <div class="loading-text">🧠 AI is analyzing clinical data…</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ TOAST ══ -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- ═══════════════════════════════════════════════ DISCLAIMER MODAL ══ -->
+    <div
+      class="modal-overlay"
+      id="disclaimerModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="disc-title"
+    >
+      <div class="modal">
+        <span class="modal-icon">⚕️</span>
+        <h2 id="disc-title">Medical Disclaimer</h2>
+        <p>
+          This tool is designed for
+          <strong>educational and research purposes only</strong>. It is not a
+          substitute for professional medical advice, diagnosis, or treatment.
+        </p>
+        <p>
+          The predictions are based on statistical models trained on the
+          Cleveland Heart Disease dataset. Always consult a qualified healthcare
+          provider for medical decisions.
+        </p>
+        <p>
+          By using this tool, you acknowledge that you understand its
+          educational nature and limitations.
+        </p>
+        <div class="modal-actions">
+          <button class="btn-modal-accept" id="acceptDisclaimer">
+            ✅ I Understand &amp; Accept
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="static/script.js"></script>
+  </body>
+</html>
